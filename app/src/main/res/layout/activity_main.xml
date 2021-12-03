@@ -40,7 +40,7 @@
         android:minHeight="48dp"
         android:scrollbars="horizontal"
         android:spinnerMode="dialog"
-        app:layout_constraintBottom_toTopOf="@+id/id_editText"
+        app:layout_constraintBottom_toTopOf="@+id/id_insert_value"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="2"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/id_editText"
+        android:id="@+id/id_insert_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -80,7 +80,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/id_insert_value" />
 
     <Spinner
         android:id="@+id/id_spinner_to"
@@ -98,7 +98,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toEndOf="@+id/id_to_textView"
-        app:layout_constraintTop_toBottomOf="@+id/id_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/id_insert_value" />
 
     <Button
         android:id="@+id/id_button_calculate"
@@ -108,16 +108,17 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:minHeight="60dp"
+        android:onClick="onClick"
         android:text="@string/calculate"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView5"
+        app:layout_constraintEnd_toStartOf="@+id/id_result_view"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_to_textView" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/id_result_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
