@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Hallo MAD</string>
+    <string name="_0_0">0.0</string>
+    <string name="calculate">CALCULATE</string>
+    <string name="_0_00">0.00</string>
+    <string name="i_have">I Have</string>
+    <string name="i_want">I Want</string>
+
 </resources>
