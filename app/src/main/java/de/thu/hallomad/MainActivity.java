@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private Spinner spinnerFrom;
@@ -23,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         data = new ExchangeRateDatabase();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item_view, R.id.id_spinner_item, data.getCurrencies());
+        CurrencyListAdapter adapter = new CurrencyListAdapter(data);
 
         /**
          * Spinner Source
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         String source = (String) spinnerFrom.getSelectedItem();
         String target = (String) spinnerTo.getSelectedItem();
         if (String.valueOf(insertValue.getText()).equals("")) {
-            insertValue.setText("1.00");
+            insertValue.setText(R.string.DefaultValue);
         }
         double valueInserted = Double.parseDouble(String.valueOf(insertValue.getText()));
         DecimalFormat decimalFormat = new DecimalFormat("#.#####");
