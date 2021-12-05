@@ -14,7 +14,6 @@
         android:minHeight="40dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:text="test1"
         android:textSize="24sp" />
 
     <TextView
@@ -26,6 +25,5 @@
         android:minHeight="40dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:text="test2"
         android:textSize="24sp" />
 </LinearLayout>
