@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         data = new ExchangeRateDatabase();
-        CurrencyListAdapter adapter = new CurrencyListAdapter(data);
+        CurrencyItemAdapter adapter = new CurrencyItemAdapter(data);
 
         /**
          * Spinner Source

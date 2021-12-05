@@ -37,7 +37,7 @@
         android:spinnerMode="dialog"
         app:layout_constraintEnd_toStartOf="@+id/id_insert_value"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintHorizontal_weight="3"
         app:layout_constraintStart_toEndOf="@+id/id_from_textView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -92,7 +92,7 @@
         android:spinnerMode="dialog"
         app:layout_constraintEnd_toStartOf="@+id/id_result_view"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintHorizontal_weight="3"
         app:layout_constraintStart_toEndOf="@+id/id_to_textView"
         app:layout_constraintTop_toBottomOf="@+id/id_spinner_from" />
 
