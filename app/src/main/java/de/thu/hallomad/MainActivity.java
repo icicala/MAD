@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void onClick(View view) {
+    public void onClicked(View view) {
         TextView resultView = findViewById(R.id.id_result_view);
         EditText insertValue = findViewById(R.id.id_insert_value);
         String source = (String) spinnerFrom.getSelectedItem();
