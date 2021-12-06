@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class ColorDetailsActivity extends AppCompatActivity {
@@ -17,8 +20,22 @@ public class ColorDetailsActivity extends AppCompatActivity {
         String colorName = (String) intent.getSerializableExtra("colorName");
         int colorValue = (int) intent.getSerializableExtra("colorValue");
 
-        TextView textView = findViewById(R.id.id_colorDetails);
+        EditText textView = findViewById(R.id.id_colorDetails);
         textView.setText(colorName);
         textView.setBackgroundColor(colorValue);
+
+        textView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("colorNewName", textView.getText().toString());
+                    setResult(RESULT_OK, returnIntent);
+                    finish();
+                }
+                return false;
+            }
+        });
     }
 }

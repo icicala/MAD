@@ -1,5 +1,6 @@
 package de.thu.hallomad;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
-
+    ColorListAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.list_view_id);
 
-        ColorListAdapter adapter = new ColorListAdapter(colors);
+        adapter = new ColorListAdapter(colors);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -45,8 +46,21 @@ public class MainActivity extends AppCompatActivity {
                 ColorEntry entry = (ColorEntry) adapter.getItem(position);
                 intent.putExtra("colorName", entry.name);
                 intent.putExtra("colorValue", entry.color);
-                startActivity(intent);
+                startActivityForResult(intent, position);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            String newName = data.getStringExtra("colorNewName");
+            ColorEntry entry = (ColorEntry) adapter.getItem(requestCode);
+
+            entry.name = newName;
+            adapter.notifyDataSetChanged();
+        }
     }
 }
