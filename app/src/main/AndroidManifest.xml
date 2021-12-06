@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HalloMAD">
         <activity
+            android:name=".ColorDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
