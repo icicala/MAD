@@ -2,7 +2,9 @@ package de.thu.hallomad;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinnerFrom;
     private Spinner spinnerTo;
     private ExchangeRateDatabase data;
+    private ShareActionProvider shareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +68,30 @@ public class MainActivity extends AppCompatActivity {
         decimalFormat.setRoundingMode(RoundingMode.CEILING);
         double finalResult = data.convert(valueInserted, source, target);
         resultView.setText(decimalFormat.format(finalResult));
+        String messageShare = "Currency Converter says: " +
+                valueInserted + " " + source + " are " + decimalFormat.format(finalResult) + " " + target;
+        setShareText(messageShare);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+        MenuItem shareItem = menu.findItem(R.id.id_share);
+        shareActionProvider = (ShareActionProvider)
+                MenuItemCompat.getActionProvider(shareItem);
+        setShareText(null);
         return true;
 
 
+    }
+
+    private void setShareText(String text) {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        if (text != null) {
+            shareIntent.putExtra(Intent.EXTRA_TEXT, text);
+        }
+        shareActionProvider.setShareIntent(shareIntent);
     }
 
     @Override

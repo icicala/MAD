@@ -11,4 +11,12 @@
         android:title="@string/currency_list"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/id_share"
+        android:orderInCategory="200"
+        android:title="@string/share"
+        app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"
+        app:showAsAction="ifRoom" />
+
+
 </menu>
