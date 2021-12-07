@@ -96,11 +96,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent = new Intent(MainActivity.this, CurrencyListActivity.class);
         switch (item.getItemId()) {
             case R.id.id_currency_list_menu:
-                Intent intent = new Intent(MainActivity.this, CurrencyListActivity.class);
+                intent.putExtra("EditMode", false);
                 startActivity(intent);
                 return true;
+            case R.id.id_edit_currency_list:
+                intent.putExtra("EditMode", true);
+                startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
         }

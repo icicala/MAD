@@ -8,5 +8,6 @@
     <string name="flag_country">Flag country</string>
     <string name="currency_list">Currency List</string>
     <string name="share">Share</string>
+    <string name="edit_currency_list">Edit Currency List</string>
 
 </resources>

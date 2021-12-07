@@ -76,6 +76,12 @@ public class ExchangeRateDatabase {
         return CURRENCIES_MAP.get(currency).getCapital();
     }
 
+    public void setRate(String currency, double rate) {
+        ExchangeRate exRate = CURRENCIES_MAP.get(currency);
+        exRate.setRateForOneEuro(rate);
+        CURRENCIES_MAP.put(currency, exRate);
+    }
+
 
     /**
      * Converts a value from a currency to another one
