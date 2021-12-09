@@ -9,5 +9,6 @@
     <string name="currency_list">Currency List</string>
     <string name="share">Share</string>
     <string name="edit_currency_list">Edit Currency List</string>
+    <string name="refresh_rates">Refresh Rates</string>
 
 </resources>

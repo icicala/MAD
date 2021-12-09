@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class CurrencyListActivity extends AppCompatActivity {
@@ -58,7 +57,7 @@ public class CurrencyListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         double newRate = Double.parseDouble(data.getStringExtra("newExchangeRate"));
         String currency = (String) adapter.getItem(requestCode);
-        this.data.setRate(currency, newRate);
+        this.data.setExchangeRate(currency, newRate);
         adapter.notifyDataSetChanged();
 
 

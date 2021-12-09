@@ -1,13 +1,16 @@
 package de.thu.hallomad;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +21,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
 import java.math.RoundingMode;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinnerTo;
     private ExchangeRateDatabase data;
     private ShareActionProvider shareActionProvider;
+    private CurrencyItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         data = new ExchangeRateDatabase();
-        CurrencyItemAdapter adapter = new CurrencyItemAdapter(data);
+        adapter = new CurrencyItemAdapter(data);
 
         /**
          * Spinner Source
@@ -52,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
          */
         spinnerTo = findViewById(R.id.id_spinner_to);
         spinnerTo.setAdapter(adapter);
+
+        //Temporary solution on NetworkOnMainThreadException
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
 
@@ -94,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         shareActionProvider.setShareIntent(shareIntent);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent = new Intent(MainActivity.this, CurrencyListActivity.class);
@@ -105,10 +120,43 @@ public class MainActivity extends AppCompatActivity {
             case R.id.id_edit_currency_list:
                 intent.putExtra("EditMode", true);
                 startActivity(intent);
+                return true;
+            case R.id.id_refresh_rate:
+                updateCurrencies();
+                adapter.notifyDataSetChanged();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
 
+    }
+
+    private void updateCurrencies() {
+        String dataBaseAPI = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
+        try {
+            URL url = new URL(dataBaseAPI);
+            URLConnection urlConnection = url.openConnection();
+            XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
+            parser.setInput(urlConnection.getInputStream(), urlConnection.getContentEncoding());
+
+            int eventType = parser.getEventType();
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                if (eventType == XmlPullParser.START_TAG) {
+                    if (parser.getName().equals("Cube")) {
+                        if (parser.getAttributeCount() == 2) {
+                            String currency = parser.getAttributeValue(null, "currency");
+                            double exchangeRate = Double.parseDouble(parser.getAttributeValue(null, "rate"));
+                            data.setExchangeRate(currency, exchangeRate);
+                        }
+                    }
+                }
+                eventType = parser.next();
+            }
+
+        } catch (Exception e) {
+            Log.e("DatabaseAccess", "Error in DB " + e.toString());
+            e.printStackTrace();
+        }
     }
 }

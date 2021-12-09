@@ -1,5 +1,7 @@
 package de.thu.hallomad;
 
+import android.util.Log;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +40,7 @@ public class ExchangeRateDatabase {
             new ExchangeRate("PHP", "Manila", 48.527),
             new ExchangeRate("SGD", "Singapore", 1.4898),
             new ExchangeRate("THB", "Bangkok", 35.328),
+            new ExchangeRate("ISK", "Reykjavik", 145.20),
             new ExchangeRate("ZAR", "Cape Town", 13.1446)
     };
 
@@ -76,10 +79,14 @@ public class ExchangeRateDatabase {
         return CURRENCIES_MAP.get(currency).getCapital();
     }
 
-    public void setRate(String currency, double rate) {
-        ExchangeRate exRate = CURRENCIES_MAP.get(currency);
-        exRate.setRateForOneEuro(rate);
-        CURRENCIES_MAP.put(currency, exRate);
+    public void setExchangeRate(String currency, double rate) {
+        try {
+            ExchangeRate exchangeRate = CURRENCIES_MAP.get(currency);
+            exchangeRate.setRateForOneEuro(rate);
+            CURRENCIES_MAP.put(currency, exchangeRate);
+        } catch (NullPointerException e) {
+            Log.i("NUllPointer", currency);
+        }
     }
 
 
