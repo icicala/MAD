@@ -1,6 +1,10 @@
 package de.thu.hallomad;
 
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 public class StopWatchRunnable implements Runnable {
     private boolean running = false;
@@ -34,12 +38,19 @@ public class StopWatchRunnable implements Runnable {
     // are called in the UI THREAD
     synchronized public void startStop() {
         running = !running;
+        Toast toast = Toast.makeText(textView.getContext(), "Clicked Start/Stop", Toast.LENGTH_LONG);
+        toast.show();
+
+
     }
 
     synchronized public void reset() {
         running = false;
         value = 0;
         updateUI();
+
+        Snackbar.make(textView.getRootView(), "Reset Everything", BaseTransientBottomBar.LENGTH_LONG).show();
+
     }
 
     // sent to UI thread
