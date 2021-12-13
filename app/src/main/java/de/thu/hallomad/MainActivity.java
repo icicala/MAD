@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private ExchangeRateDatabase data;
     private ShareActionProvider shareActionProvider;
     private CurrencyItemAdapter adapter;
+    private ExchangeRateUpdateRunnable exchangeRateUpdateRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +63,6 @@ public class MainActivity extends AppCompatActivity {
          */
         spinnerTo = findViewById(R.id.id_spinner_to);
         spinnerTo.setAdapter(adapter);
-
-        //Temporary solution on NetworkOnMainThreadException
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
     }
 
 
@@ -108,6 +105,10 @@ public class MainActivity extends AppCompatActivity {
         shareActionProvider.setShareIntent(shareIntent);
     }
 
+    public CurrencyItemAdapter getAdapter() {
+        return adapter;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -122,8 +123,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.id_refresh_rate:
-                updateCurrencies();
-                adapter.notifyDataSetChanged();
+                exchangeRateUpdateRunnable = new ExchangeRateUpdateRunnable(this, data);
+                new Thread(exchangeRateUpdateRunnable).start();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -132,31 +133,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void updateCurrencies() {
-        String dataBaseAPI = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
-        try {
-            URL url = new URL(dataBaseAPI);
-            URLConnection urlConnection = url.openConnection();
-            XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
-            parser.setInput(urlConnection.getInputStream(), urlConnection.getContentEncoding());
-
-            int eventType = parser.getEventType();
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                if (eventType == XmlPullParser.START_TAG) {
-                    if (parser.getName().equals("Cube")) {
-                        if (parser.getAttributeCount() == 2) {
-                            String currency = parser.getAttributeValue(null, "currency");
-                            double exchangeRate = Double.parseDouble(parser.getAttributeValue(null, "rate"));
-                            data.setExchangeRate(currency, exchangeRate);
-                        }
-                    }
-                }
-                eventType = parser.next();
-            }
-
-        } catch (Exception e) {
-            Log.e("DatabaseAccess", "Error in DB " + e.toString());
-            e.printStackTrace();
-        }
-    }
 }
