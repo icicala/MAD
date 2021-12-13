@@ -10,9 +10,11 @@ public class StopWatchRunnable implements Runnable {
     private boolean running = false;
     private int value = 0;
     private TextView textView;
+    private StopWatchNotifier stopWatchNotifier;
 
     public StopWatchRunnable(TextView view) {
         textView = view;
+        this.stopWatchNotifier = new StopWatchNotifier(textView.getContext());
     }
 
     // this runs in own thread
@@ -40,6 +42,7 @@ public class StopWatchRunnable implements Runnable {
         running = !running;
         Toast toast = Toast.makeText(textView.getContext(), "Clicked Start/Stop", Toast.LENGTH_LONG);
         toast.show();
+        updateUI();
 
 
     }
@@ -59,6 +62,11 @@ public class StopWatchRunnable implements Runnable {
             @Override
             public void run() {
                 textView.setText(value + " seconds");
+                if (running) {
+                    stopWatchNotifier.showorUpdateNotification(value);
+                } else {
+                    stopWatchNotifier.removeNotification();
+                }
             }
         };
         textView.post(r);
