@@ -105,11 +105,6 @@ public class MainActivity extends AppCompatActivity {
         shareActionProvider.setShareIntent(shareIntent);
     }
 
-    public CurrencyItemAdapter getAdapter() {
-        return adapter;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent = new Intent(MainActivity.this, CurrencyListActivity.class);
@@ -132,5 +127,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public CurrencyItemAdapter getAdapter() {
+        return adapter;
+    }
+
 
 }

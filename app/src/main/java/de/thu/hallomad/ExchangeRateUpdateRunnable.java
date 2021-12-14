@@ -1,8 +1,7 @@
 package de.thu.hallomad;
 
-import android.content.Context;
 import android.util.Log;
-import android.view.View;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -13,11 +12,11 @@ import java.util.Date;
 
 public class ExchangeRateUpdateRunnable implements Runnable {
     private ExchangeRateDatabase data;
-    private MainActivity view;
+    private MainActivity activity;
 
-    public ExchangeRateUpdateRunnable(MainActivity view, ExchangeRateDatabase data) {
+    public ExchangeRateUpdateRunnable(MainActivity activity, ExchangeRateDatabase data) {
         this.data = data;
-        this.view = view;
+        this.activity = activity;
     }
 
     @Override
@@ -48,7 +47,7 @@ public class ExchangeRateUpdateRunnable implements Runnable {
                     }
                 }
                 eventType = parser.next();
-                Thread.sleep(100);
+//                Thread.sleep(100); to test when another threat is started while another is running
             }
 
         } catch (Exception e) {
@@ -59,10 +58,13 @@ public class ExchangeRateUpdateRunnable implements Runnable {
 
 
     synchronized private void updateUI() {
-        view.runOnUiThread(new Runnable() {
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                view.getAdapter().notifyDataSetChanged();
+                activity.getAdapter().notifyDataSetChanged();
+                Toast toast = Toast.makeText(activity, "Currencies Update finished!", Toast.LENGTH_LONG);
+                toast.show();
+
             }
         });
 
