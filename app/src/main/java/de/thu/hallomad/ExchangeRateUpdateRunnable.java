@@ -8,15 +8,19 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.net.URL;
 import java.net.URLConnection;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class ExchangeRateUpdateRunnable implements Runnable {
     private ExchangeRateDatabase data;
     private MainActivity activity;
+    private ExchangeRateUpdateNotifier exchangeRateUpdateNotifier;
 
     public ExchangeRateUpdateRunnable(MainActivity activity, ExchangeRateDatabase data) {
         this.data = data;
         this.activity = activity;
+        this.exchangeRateUpdateNotifier = new ExchangeRateUpdateNotifier(activity);
     }
 
     @Override
@@ -64,7 +68,12 @@ public class ExchangeRateUpdateRunnable implements Runnable {
                 activity.getAdapter().notifyDataSetChanged();
                 Toast toast = Toast.makeText(activity, "Currencies Update finished!", Toast.LENGTH_LONG);
                 toast.show();
-
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy HH:mm:ss");
+                    LocalDateTime currentTime = LocalDateTime.now();
+                    String displayTimeAndDate = currentTime.format(dateTimeFormatter);
+                    exchangeRateUpdateNotifier.showOrUpdateNotification(displayTimeAndDate);
+                }
             }
         });
 
