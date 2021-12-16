@@ -7,7 +7,9 @@ import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -35,15 +37,19 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private Spinner spinnerFrom;
     private Spinner spinnerTo;
+    private TextView resultView;
+    private EditText insertValue;
     private ExchangeRateDatabase data;
     private ShareActionProvider shareActionProvider;
     private CurrencyItemAdapter adapter;
     private ExchangeRateUpdateRunnable exchangeRateUpdateRunnable;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         // Toolbar initializing
         Toolbar toolbar = findViewById(R.id.id_toolbar);
@@ -63,12 +69,16 @@ public class MainActivity extends AppCompatActivity {
          */
         spinnerTo = findViewById(R.id.id_spinner_to);
         spinnerTo.setAdapter(adapter);
+
+        /**
+         * Initialize the Edittext and Result
+         */
+        resultView = findViewById(R.id.id_result_view);
+        insertValue = findViewById(R.id.id_insert_value);
     }
 
 
     public void onClicked(View view) {
-        TextView resultView = findViewById(R.id.id_result_view);
-        EditText insertValue = findViewById(R.id.id_insert_value);
         String source = (String) spinnerFrom.getSelectedItem();
         String target = (String) spinnerTo.getSelectedItem();
         if (String.valueOf(insertValue.getText()).equals("")) {
@@ -132,5 +142,36 @@ public class MainActivity extends AppCompatActivity {
         return adapter;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
 
+        SharedPreferences.Editor editor = prefs.edit();
+        int source = spinnerFrom.getSelectedItemPosition();
+        int target = spinnerTo.getSelectedItemPosition();
+        editor.putInt("source", source);
+        editor.putInt("target", target);
+        editor.putString("insertValue", insertValue.getText().toString());
+        editor.putString("resultView", resultView.getText().toString());
+        editor.apply();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+        int source = prefs.getInt("source", 0);
+        int target = prefs.getInt("target", 0);
+        String insertAmount = prefs.getString("insertValue", "0");
+        String resultExchange = prefs.getString("resultView", "0.0");
+        spinnerFrom.setSelection(source);
+        spinnerTo.setSelection(target);
+        insertValue.setText(insertAmount);
+        resultView.setText(resultExchange);
+
+
+    }
 }
