@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Hallo MAD</string>
+    <string name="song">Song</string>
+    <string name="artist">Artist</string>
+    <string name="title">Title</string>
+    <string name="album">Album:</string>
+    <string name="randomly_select_new">RANDOMLY SELECT NEW!</string>
 </resources>
