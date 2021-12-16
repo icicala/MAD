@@ -7,12 +7,16 @@ import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.BaseColumns;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private ShareActionProvider shareActionProvider;
     private CurrencyItemAdapter adapter;
     private ExchangeRateUpdateRunnable exchangeRateUpdateRunnable;
-
+    private static int versionDatabase;
+    private ExchangeRateDatabaseHelper exchangeRateDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
          */
         resultView = findViewById(R.id.id_result_view);
         insertValue = findViewById(R.id.id_insert_value);
+
+        exchangeRateDatabaseHelper = new ExchangeRateDatabaseHelper(this);
+        versionDatabase = ExchangeRateDatabaseHelper.DATABASE_VERSION;
+
     }
 
 
@@ -130,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.id_refresh_rate:
                 exchangeRateUpdateRunnable = new ExchangeRateUpdateRunnable(this, data);
                 new Thread(exchangeRateUpdateRunnable).start();
+                versionDatabase = versionDatabase + 1;
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -146,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-
         SharedPreferences.Editor editor = prefs.edit();
         int source = spinnerFrom.getSelectedItemPosition();
         int target = spinnerTo.getSelectedItemPosition();
@@ -154,7 +163,9 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("target", target);
         editor.putString("insertValue", insertValue.getText().toString());
         editor.putString("resultView", resultView.getText().toString());
+        editor.putInt("versionDatabase", versionDatabase);
         editor.apply();
+
 
     }
 
@@ -167,11 +178,59 @@ public class MainActivity extends AppCompatActivity {
         int target = prefs.getInt("target", 0);
         String insertAmount = prefs.getString("insertValue", "0");
         String resultExchange = prefs.getString("resultView", "0.0");
+        int versionDB = prefs.getInt("versionDatabase", 1);
         spinnerFrom.setSelection(source);
         spinnerTo.setSelection(target);
         insertValue.setText(insertAmount);
         resultView.setText(resultExchange);
+        versionDatabase = versionDB;
+
+    }
 
 
+    private void insertDataSQLite() {
+        SQLiteDatabase db = exchangeRateDatabaseHelper.getWritableDatabase();
+        exchangeRateDatabaseHelper.onUpgrade(db, ExchangeRateDatabaseHelper.DATABASE_VERSION, versionDatabase);
+        if (versionDatabase > 1) {
+            ContentValues values = new ContentValues();
+            String[] currencies = data.getCurrencies();
+            for (String currency : currencies) {
+                values.put(ExchangeRateDatabaseHelper.XR_ECB_COL_CURRENCY, currency);
+                values.put(ExchangeRateDatabaseHelper.XR_EXB_COL_RATE, data.getExchangeRate(currency));
+                long newRowId = db.insert(ExchangeRateDatabaseHelper.XR_ECB_TABLE, null, values);
+            }
+        }
+
+    }
+
+    private void queryDataSQLite() {
+        SQLiteDatabase db = exchangeRateDatabaseHelper.getReadableDatabase();
+        String[] projection = {
+                BaseColumns._ID,
+                ExchangeRateDatabaseHelper.XR_ECB_COL_CURRENCY,
+                ExchangeRateDatabaseHelper.XR_EXB_COL_RATE
+        };
+        Cursor cursor = db.query(ExchangeRateDatabaseHelper.XR_ECB_TABLE, projection, null, null, null, null, null);
+
+
+        while (cursor.moveToNext()) {
+            String currency = cursor.getString(cursor.getColumnIndexOrThrow(ExchangeRateDatabaseHelper.XR_ECB_COL_CURRENCY));
+            Double rate = cursor.getDouble(cursor.getColumnIndexOrThrow(ExchangeRateDatabaseHelper.XR_EXB_COL_RATE));
+            data.setExchangeRate(currency, rate);
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        queryDataSQLite();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        insertDataSQLite();
     }
 }
