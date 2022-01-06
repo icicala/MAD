@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.versionedparcelable.ParcelField;
+
 public class CurrencyItemAdapter extends BaseAdapter {
     ExchangeRateDatabase data;
 
