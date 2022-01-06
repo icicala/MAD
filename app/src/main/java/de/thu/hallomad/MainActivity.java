@@ -7,6 +7,10 @@ import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +19,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.os.StrictMode;
 import android.provider.BaseColumns;
 import android.util.Log;
@@ -30,6 +36,7 @@ import android.widget.TextView;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.Serializable;
 import java.math.RoundingMode;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -39,6 +46,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private final static int JOB_ID = 101;
     private Spinner spinnerFrom;
     private Spinner spinnerTo;
     private TextView resultView;
@@ -83,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
 
         exchangeRateDatabaseHelper = new ExchangeRateDatabaseHelper(this);
         versionDatabase = ExchangeRateDatabaseHelper.DATABASE_VERSION;
+        jobScheduleUpdateRate();
+
 
     }
 
@@ -232,5 +242,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         insertDataSQLite();
+    }
+
+    private void jobScheduleUpdateRate() {
+        ComponentName serviceName = new ComponentName(this, ExchangeRateUpdateJobService.class);
+        JobInfo jobInfo = new JobInfo.Builder(JOB_ID, serviceName)
+                .setPeriodic(24 * 60 * 1000)
+                .setPersisted(true)
+                .build();
+        JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        int result = jobScheduler.schedule(jobInfo);
+        if (result == JobScheduler.RESULT_SUCCESS) {
+            Log.d("JobSchedule", "Successfully scheduled!");
+
+        }
+
     }
 }
