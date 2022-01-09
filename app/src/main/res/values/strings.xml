@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Hallo MAD</string>
+    <string name="albert_einstein_image">Albert Einstein Image</string>
+    <string name="boost_your_knowledge">BOOST YOUR KNOWLEDGE</string>
+    <string name="category_image">Category Image</string>
+    <string name="category">CATEGORY</string>
+    <string name="advanced_image">Advanced Image</string>
+    <string name="advanced">ADVANCED</string>
 </resources>
