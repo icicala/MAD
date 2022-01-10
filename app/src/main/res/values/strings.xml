@@ -6,4 +6,5 @@
     <string name="category">CATEGORY</string>
     <string name="advanced_image">Advanced Image</string>
     <string name="advanced">ADVANCED</string>
+    <string name="category_icon">category icon</string>
 </resources>
