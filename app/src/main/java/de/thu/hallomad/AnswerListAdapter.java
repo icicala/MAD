@@ -39,11 +39,13 @@ public class AnswerListAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list_answer_view_entry, null, false);
         }
+
         TextView order = view.findViewById(R.id.id_order);
-        order.setText(String.valueOf(entry.order));
+        order.setText(String.valueOf(entry.getOrder()).toUpperCase());
 
         TextView answer = view.findViewById(R.id.id_answer);
-        answer.setText(entry.answer);
+        answer.setText(entry.getAnswer());
+
 
         return view;
     }

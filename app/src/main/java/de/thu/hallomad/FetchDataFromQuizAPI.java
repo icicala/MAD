@@ -25,8 +25,6 @@ public class FetchDataFromQuizAPI {
             connection.setRequestMethod("GET");
             InputStream inputStream = new BufferedInputStream(connection.getInputStream());
             response = convertStreamToString(inputStream);
-
-
         } catch (Exception e) {
             Log.e("Json", "Exception Error: " + e.getMessage());
         }
@@ -49,6 +47,7 @@ public class FetchDataFromQuizAPI {
                 inputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
+                Log.d("Failed to close", e.getMessage());
             }
         }
 
