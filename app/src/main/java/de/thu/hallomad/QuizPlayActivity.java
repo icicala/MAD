@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class QuizPlayActivity extends AppCompatActivity {
     private SeekBar progressBar;
     private int totalPoints;
     private int marginPoints;
+    private String selectedCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +37,11 @@ public class QuizPlayActivity extends AppCompatActivity {
         positionQuiz = 0;
         totalPoints = 0;
 
-        String selectedCategory = getIntent().getSerializableExtra("selectedCategory") + " Quiz";
+        selectedCategory = (String) getIntent().getSerializableExtra("selectedCategory");
         data = (ArrayList<QuestionAnswers>) getIntent().getSerializableExtra("QuizApiData");
-        marginPoints = (int) (100 / (data.size() - 1));
+        marginPoints = 100 / (data.size() - 1);
         TextView textViewCategoryQuiz = findViewById(R.id.id_categoryQuiz);
-        textViewCategoryQuiz.setText(selectedCategory);
+        textViewCategoryQuiz.setText(selectedCategory + " Quiz");
         Log.d("ErrorLaInceput", data.size() + " ");
         progressBar = findViewById(R.id.id_QuestionPositionBar);
         progressBar.setMax(data.size() - 1);
@@ -74,7 +76,11 @@ public class QuizPlayActivity extends AppCompatActivity {
                         displayQuiz(positionQuiz);
 
                     } else {
-                        Log.d("Error", totalPoints + " ");
+                        Intent result = new Intent(QuizPlayActivity.this, ResultsActivity.class);
+                        result.putExtra("selectedCategory", selectedCategory);
+                        result.putExtra("QuizApiData", data);
+                        result.putExtra("score", totalPoints);
+                        startActivity(result);
 
                     }
 

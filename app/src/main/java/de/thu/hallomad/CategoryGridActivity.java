@@ -2,6 +2,8 @@ package de.thu.hallomad;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -31,7 +34,7 @@ public class CategoryGridActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_grid);
         CategoryDatabase categoryDatabase = new CategoryDatabase();
-        CategoryGridAdapter adapter = new CategoryGridAdapter(categoryDatabase);
+        adapter = new CategoryGridAdapter(categoryDatabase);
         GridView gridView = findViewById(R.id.id_category_grid);
         gridView.setAdapter(adapter);
 
@@ -48,13 +51,26 @@ public class CategoryGridActivity extends AppCompatActivity {
                 }
                 url = "https://quizapi.io/api/v1/questions?apiKey=RX3MHGRVCWjCiTlFTMTeIfG1tfaU1jVo1I5Lpf64&category=" + selectedItem + "&limit=20";
                 Log.d("Clicked", selectedItem);
-                new GetQuestions().execute(url);
+                new GetQuestions(view.getContext()).execute(url);
             }
         });
     }
 
     private class GetQuestions extends AsyncTask<String, Void, ArrayList<QuestionAnswers>> {
 
+        private final ProgressDialog progressDialog;
+
+        public GetQuestions(Context context) {
+            this.progressDialog = new ProgressDialog(context, ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("Loading...");
+            progressDialog.setTitle("Getting Quiz");
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.show();
+        }
 
         @Override
         protected ArrayList<QuestionAnswers> doInBackground(String... params) {
@@ -110,6 +126,7 @@ public class CategoryGridActivity extends AppCompatActivity {
             Intent playQuizIntent = new Intent(CategoryGridActivity.this, QuizPlayActivity.class);
             playQuizIntent.putExtra("selectedCategory", selectedItem);
             playQuizIntent.putExtra("QuizApiData", data);
+            progressDialog.dismiss();
             startActivity(playQuizIntent);
 
 
