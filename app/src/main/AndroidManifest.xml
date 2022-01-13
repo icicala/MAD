@@ -13,13 +13,13 @@
         android:theme="@style/Theme.HalloMAD">
         <activity
             android:name=".ResultsActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".QuizPlayActivity"
             android:exported="false" />
         <activity
             android:name=".CategoryGridActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
