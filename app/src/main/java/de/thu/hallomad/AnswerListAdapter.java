@@ -34,10 +34,10 @@ public class AnswerListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         Context context = parent.getContext();
-        AnswerEntry entry = data.get(position);
+        AnswerEntry entry = (AnswerEntry) getItem(position);
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.list_answer_view_entry, null, false);
+            view = inflater.inflate(R.layout.list_answer_view_entry, parent, false);
         }
 
         TextView order = view.findViewById(R.id.id_order);

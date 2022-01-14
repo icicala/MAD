@@ -36,57 +36,64 @@ public class QuizPlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz_play);
         positionQuiz = 0;
         totalPoints = 0;
-
+        listViewAnswers = findViewById(R.id.id_listView_answer);
+        questionView = findViewById(R.id.id_question);
         selectedCategory = (String) getIntent().getSerializableExtra("selectedCategory");
         data = (ArrayList<QuestionAnswers>) getIntent().getSerializableExtra("QuizApiData");
         marginPoints = 100 / (data.size() - 1);
         TextView textViewCategoryQuiz = findViewById(R.id.id_categoryQuiz);
         textViewCategoryQuiz.setText(selectedCategory + " Quiz");
-        Log.d("ErrorLaInceput", data.size() + " ");
+
         progressBar = findViewById(R.id.id_QuestionPositionBar);
         progressBar.setMax(data.size() - 1);
         displayQuiz(positionQuiz);
-        Log.d("ErrorMaring", String.valueOf(marginPoints));
+
 
 
         listViewAnswers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                char selectedAnswer = ((AnswerEntry) answerListAdapter.getItem(position)).getOrder();
-                if (selectedAnswer != data.get(positionQuiz).getCorrectAnswer()) {
-                    if (!data.get(positionQuiz).getExplanation().equals("")) {
-                        Toast onfalseAnswer = Toast.makeText(parent.getContext(), data.get(positionQuiz).getExplanation(), Toast.LENGTH_SHORT);
-                        onfalseAnswer.show();
-                    }
-                    listViewAnswers.getChildAt(position).setBackgroundColor(Color.RED);
-                    if (listViewAnswers.getChildAt(position).isEnabled()) {
-                        if (totalPoints >= marginPoints) {
-                            totalPoints = totalPoints - marginPoints;
+                try {
+                    char selectedAnswer = ((AnswerEntry) answerListAdapter.getItem(position)).getOrder();
+                    if (selectedAnswer != data.get(positionQuiz).getCorrectAnswer()) {
+                        if (!data.get(positionQuiz).getExplanation().equals("")) {
+                            Toast onfalseAnswer = Toast.makeText(parent.getContext(), data.get(positionQuiz).getExplanation(), Toast.LENGTH_SHORT);
+                            onfalseAnswer.show();
                         }
-                        Log.d("ErrorMinus", String.valueOf(totalPoints));
-                    }
-                    listViewAnswers.getChildAt(position).setEnabled(false);
+                        view.setBackgroundColor(Color.RED);
 
-                } else {
-
-                    if (positionQuiz < data.size() - 1) {
-                        totalPoints = totalPoints + marginPoints;
-                        positionQuiz++;
-                        Log.d("ErrorPLus", String.valueOf(totalPoints));
-                        displayQuiz(positionQuiz);
+                        if (view.isEnabled()) {
+                            if (totalPoints >= marginPoints) {
+                                totalPoints = totalPoints - marginPoints;
+                            }
+                            Log.d("ErrorMinus", String.valueOf(totalPoints));
+                            parent.getChildAt(position).setEnabled(false);
+                        }
 
                     } else {
-                        Intent result = new Intent(QuizPlayActivity.this, ResultsActivity.class);
-                        result.putExtra("selectedCategory", selectedCategory);
-                        result.putExtra("QuizApiData", data);
-                        result.putExtra("score", totalPoints);
-                        startActivity(result);
+
+                        if (positionQuiz < data.size() - 1) {
+                            totalPoints = totalPoints + marginPoints;
+                            positionQuiz++;
+                            Log.d("QuizPosition", positionQuiz + "");
+                            displayQuiz(positionQuiz);
+
+                        } else {
+                            Intent result = new Intent(QuizPlayActivity.this, ResultsActivity.class);
+                            result.putExtra("selectedCategory", selectedCategory);
+                            result.putExtra("QuizApiData", data);
+                            result.putExtra("score", totalPoints);
+                            startActivity(result);
+
+                        }
 
                     }
-
+                } catch (Exception e) {
+                    Log.e("Error", e.getMessage());
                 }
             }
         });
+
 
         // keep the progressbar not to be able to be change by user
         progressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -115,10 +122,8 @@ public class QuizPlayActivity extends AppCompatActivity {
 
     private void displayQuiz(int index) {
         progressBar.setProgress(positionQuiz);
-        questionView = findViewById(R.id.id_question);
         questionView.setText(data.get(index).getQuestion());
         answerListAdapter = new AnswerListAdapter(data.get(index).getAnswers());
-        listViewAnswers = findViewById(R.id.id_listView_answer);
         listViewAnswers.setAdapter(answerListAdapter);
 
     }

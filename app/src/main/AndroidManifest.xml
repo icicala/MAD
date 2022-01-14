@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HalloMAD">
         <activity
+            android:name=".CheckResultsActivity"
+            android:exported="false"></activity>
+        <activity
             android:name=".ResultsActivity"
             android:exported="false" />
         <activity
@@ -25,8 +28,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

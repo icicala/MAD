@@ -7,5 +7,4 @@
     android:gravity="center"
     android:numColumns="auto_fit"
     tools:context=".CategoryGridActivity">
-
 </GridView>
