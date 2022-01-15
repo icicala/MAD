@@ -12,8 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HalloMAD">
         <activity
-            android:name=".CheckResultsActivity"
+            android:name=".AdvancedActivity"
             android:exported="false"></activity>
+        <activity
+            android:name=".CheckResultsActivity"
+            android:exported="false" />
         <activity
             android:name=".ResultsActivity"
             android:exported="false" />

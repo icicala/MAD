@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class CategoryDatabase {
     private final static String[] CATEGORIES = {
-            "Linux", "BASH", "PHP", "Docker", "HTML", "SQL", "JavaScript", "DevOps", "Kubernetes"
+            "Linux", "BASH", "PHP", "Docker", "HTML", "MySQL", "JavaScript", "DevOps", "Kubernetes"
     };
 
     static {

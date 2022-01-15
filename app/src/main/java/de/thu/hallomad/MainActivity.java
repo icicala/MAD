@@ -14,11 +14,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        CardView categorycardView = findViewById(R.id.id_categoryCardView);
-        categorycardView.setOnClickListener(new View.OnClickListener() {
+        CardView categoryCardView = findViewById(R.id.id_categoryCardView);
+        categoryCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent categoryIntent = new Intent(MainActivity.this, CategoryGridActivity.class);
+                startActivity(categoryIntent);
+            }
+        });
+
+        CardView advancedCardView = findViewById(R.id.id_advancedCardView);
+        advancedCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent categoryIntent = new Intent(MainActivity.this, AdvancedActivity.class);
                 startActivity(categoryIntent);
             }
         });

@@ -31,7 +31,6 @@ public class CheckResultsActivity extends AppCompatActivity {
 
         displayQuiz(questionNumber);
 
-
     }
 
     private void displayQuiz(int position) {

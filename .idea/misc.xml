@@ -4,17 +4,20 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2203125" />
+        <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/layout/activity_advanced.xml" value="0.25729166666666664" />
         <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/layout/activity_category_grid.xml" value="0.23233695652173914" />
         <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/layout/activity_check_results.xml" value="0.33" />
         <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/layout/activity_quiz_play.xml" value="0.213768115942029" />
         <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/layout/activity_results.xml" value="0.19293478260869565" />
+        <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/layout/advanced_spinner_entry.xml" value="0.22708333333333333" />
         <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/layout/category_grid_entry.xml" value="0.23233695652173914" />
         <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/layout/list_answer_result_entry.xml" value="0.21739130434782608" />
         <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/layout/list_answer_result_view_entry.xml" value="0.1875" />
         <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/layout/list_answer_view_entry.xml" value="0.13177083333333334" />
         <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/layout/list_check_results_entry.xml" value="0.1875" />
         <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/layout/loading.xml" value="0.33" />
+        <entry key="..\:/Users/IonCicala/AndroidStudioProjects/HalloMAD/app/src/main/res/layout/spinner_entry.xml" value="0.22708333333333333" />
       </map>
     </option>
   </component>

@@ -16,4 +16,14 @@
     <string name="FAIL">FAILED</string>
     <string name="PASS">PASSED</string>
     <string name="correct_or_false_image">Correct or false Image</string>
+    <string name="categoryLabel">Category</string>
+    <string name="any_category_of_quiz">Any category of Quiz</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="any_difficulty_of_quiz">Any difficulty of Quiz</string>
+    <string name="number_of_questions">Number of questions</string>
+    <string name="select_number_of_question_in_the_quiz">Select number of question in the Quiz</string>
+    <string name="any_tags_of_quiz">Any Tags of Quiz</string>
+    <string name="tags">Tags</string>
+    <string name="quiz_time">QUIZ! TIME</string>
+
 </resources>

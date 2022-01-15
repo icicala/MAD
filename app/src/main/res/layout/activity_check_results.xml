@@ -40,8 +40,8 @@
         android:layout_height="0dp"
         android:layout_margin="8dp"
         android:layout_weight="3"
-        android:divider="@null"
-        android:dividerHeight="0dp" />
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp" />
 
     <com.google.android.material.chip.Chip
         android:id="@+id/id_next"
