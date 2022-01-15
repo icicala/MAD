@@ -32,6 +32,8 @@ public class QuizPlayActivity extends AppCompatActivity {
     private int totalPoints;
     private int marginPoints;
     private String selectedCategory;
+    private Toast hint;
+    private Toast onfalseAnswer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +64,10 @@ public class QuizPlayActivity extends AppCompatActivity {
                     char selectedAnswer = ((AnswerEntry) answerListAdapter.getItem(position)).getOrder();
                     if (selectedAnswer != data.get(positionQuiz).getCorrectAnswer()) {
                         if (!data.get(positionQuiz).getExplanation().equals("")) {
-                            Toast hint = Toast.makeText(parent.getContext(), data.get(positionQuiz).getExplanation(), Toast.LENGTH_LONG);
+                            hint = Toast.makeText(parent.getContext(), data.get(positionQuiz).getExplanation(), Toast.LENGTH_LONG);
                             hint.show();
                         } else {
-                            Toast onfalseAnswer = Toast.makeText(parent.getContext(), "FALSE", Toast.LENGTH_SHORT);
+                            onfalseAnswer = Toast.makeText(parent.getContext(), "FALSE", Toast.LENGTH_SHORT);
                             onfalseAnswer.show();
                         }
                         answerEntryList.remove(position);
@@ -86,10 +88,17 @@ public class QuizPlayActivity extends AppCompatActivity {
 //
                             displayQuiz(positionQuiz);
                         } else {
+                            if (onfalseAnswer != null) {
+                                onfalseAnswer.cancel();
+                            }
+                            if (hint != null) {
+                                hint.cancel();
+                            }
                             Intent result = new Intent(QuizPlayActivity.this, ResultsActivity.class);
                             result.putExtra("selectedCategory", selectedCategory);
                             result.putExtra("QuizApiData", data);
                             result.putExtra("score", totalPoints);
+//
                             startActivity(result);
                         }
 
