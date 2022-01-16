@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:gravity="center"
-        android:text="Question 1"
         android:textSize="24sp" />
 
     <androidx.cardview.widget.CardView
@@ -30,7 +29,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Question about"
             android:textSize="24sp" />
     </androidx.cardview.widget.CardView>
 
@@ -43,21 +41,17 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp" />
 
-    <com.google.android.material.chip.Chip
+    <Button
         android:id="@+id/id_next"
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:clickable="true"
-        android:drawableTop="@android:drawable/ic_media_next"
-        android:focusable="true"
+        android:drawableStart="@android:drawable/ic_media_next"
+        android:elevation="12dp"
+        android:text="@string/next"
         android:onClick="onClickNext"
-        android:text="NEXT"
-        android:textColor="@android:color/white"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        app:chipBackgroundColor="@android:color/black" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/id_finish_btn_result"
@@ -68,6 +62,6 @@
         android:drawableTop="@drawable/finish"
         android:onClick="onClickFinish"
         android:text="@string/finish"
-        android:textSize="12dp" />
+        android:textSize="12sp" />
 
 </LinearLayout>

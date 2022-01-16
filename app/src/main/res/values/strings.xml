@@ -25,5 +25,6 @@
     <string name="any_tags_of_quiz">Any Tags of Quiz</string>
     <string name="tags">Tags</string>
     <string name="quiz_time">QUIZ! TIME</string>
+    <string name="next">NEXT</string>
 
 </resources>

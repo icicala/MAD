@@ -6,11 +6,11 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_new"
+        android:roundIcon="@mipmap/ic_launcher_new_round"
         android:label="Einstein QUIZ"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HalloMAD">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".AdvancedActivity"
             android:exported="false" />
