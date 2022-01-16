@@ -11,6 +11,12 @@ import java.util.List;
 
 public class ParseJson {
 
+    /**
+     * Parse the result from Quiz API into Quiz's question, answers, correct answer and the hint
+     *
+     * @param urlParam - url to be send to Quiz Api
+     * @return the list of questions ready to be display to activity
+     */
     public static ArrayList<QuestionAnswers> dataParse(String urlParam) {
         ArrayList<QuestionAnswers> data = new ArrayList<>();
         FetchDataFromQuizAPI fetchDataFromQuizAPI = new FetchDataFromQuizAPI();

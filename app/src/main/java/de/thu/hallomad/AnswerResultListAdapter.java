@@ -35,6 +35,14 @@ public class AnswerResultListAdapter extends BaseAdapter {
         return position;
     }
 
+    /**
+     * Customer adapter for Check result activity to display the answers with text and icon for correct and false answers
+     *
+     * @param position
+     * @param view
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         Context context = parent.getContext();

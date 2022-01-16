@@ -35,6 +35,12 @@ public class QuizPlayActivity extends AppCompatActivity {
     private Toast hint;
     private Toast onfalseAnswer;
 
+    /**
+     * Quiz Play activity that display the question and the answers
+     * Calculate the points for each question from 100/(total number of questions)
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +62,10 @@ public class QuizPlayActivity extends AppCompatActivity {
         displayQuiz(positionQuiz);
 
 
-
+        /**
+         * On selection of correct answer the activity is displaying the next question and the margin points are added to the totalpoints
+         * otherwise the answer is removed and a certain amount of points is deducted from total amount of points
+         */
         listViewAnswers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -110,7 +119,9 @@ public class QuizPlayActivity extends AppCompatActivity {
         });
 
 
-        // keep the progressbar not to be able to be change by user
+        /**
+         * Keep the progress of the quiz not responding on clicking from user
+         */
         progressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -135,6 +146,11 @@ public class QuizPlayActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * The text field of question and the listview of answers are filled with data from list of questions
+     *
+     * @param index - represent the position of question in the list of questions
+     */
     private void displayQuiz(int index) {
         if (answerListAdapter == null) {
             answerEntryList = new ArrayList<>();

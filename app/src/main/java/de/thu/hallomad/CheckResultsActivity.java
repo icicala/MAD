@@ -20,6 +20,11 @@ public class CheckResultsActivity extends AppCompatActivity {
     private AnswerResultListAdapter answerResultListAdapter;
     private ListView answersListView;
 
+    /**
+     * The activity to display the played Quiz where the correct answers is shown
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +38,11 @@ public class CheckResultsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Filled the text field of question and answers(customer adapter with a picture of correct and false icon and answer text)
+     *
+     * @param position
+     */
     private void displayQuiz(int position) {
         questionNumberView.setText("Question " + (position + 1));
         questionView.setText(data.get(position).getQuestion());
@@ -40,6 +50,11 @@ public class CheckResultsActivity extends AppCompatActivity {
         answersListView.setAdapter(answerResultListAdapter);
     }
 
+    /**
+     * Button to navigate to the next question in the quiz
+     *
+     * @param view
+     */
     public void onClickNext(View view) {
         if (questionNumber >= 0 && questionNumber < data.size() - 1) {
             ++questionNumber;
@@ -50,6 +65,11 @@ public class CheckResultsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Button to start the starting page after an quiz was reviewed
+     *
+     * @param view
+     */
     public void onClickFinish(View view) {
         Intent startQuiz = new Intent(CheckResultsActivity.this, MainActivity.class);
         startActivity(startQuiz);

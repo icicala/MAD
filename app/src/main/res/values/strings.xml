@@ -26,5 +26,7 @@
     <string name="tags">Tags</string>
     <string name="quiz_time">QUIZ! TIME</string>
     <string name="next">NEXT</string>
+    <string name="quiz_rules">Quiz-Rules</string>
+    <string name="about">About</string>
 
 </resources>

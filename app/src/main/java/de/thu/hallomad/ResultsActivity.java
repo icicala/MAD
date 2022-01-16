@@ -13,6 +13,11 @@ import java.util.ArrayList;
 
 public class ResultsActivity extends AppCompatActivity {
 
+    /**
+     * Result activity display the total amount of pints accumulated and the final decision of Quiz: PASSED or FAILED
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +51,12 @@ public class ResultsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Calculating the Grade by giving the total amount of points of the Quiz
+     *
+     * @param score
+     * @return
+     */
     private String gradeCalculation(int score) {
         String grade = "";
         if (score >= 80 && score <= 100) {
@@ -62,7 +73,11 @@ public class ResultsActivity extends AppCompatActivity {
         return grade;
     }
 
-
+    /**
+     * The check result activity is opening to be able to check the question with correct answers
+     *
+     * @param view
+     */
     public void checkResults(View view) {
         ArrayList<QuestionAnswers> data = (ArrayList<QuestionAnswers>) getIntent().getSerializableExtra("QuizApiData");
         Intent checkResult = new Intent(ResultsActivity.this, CheckResultsActivity.class);
@@ -70,6 +85,11 @@ public class ResultsActivity extends AppCompatActivity {
         startActivity(checkResult);
     }
 
+    /**
+     * The starting page is opening after the user finished playing a quiz
+     *
+     * @param view
+     */
     public void onClickFinish(View view) {
         Intent startQuiz = new Intent(ResultsActivity.this, MainActivity.class);
         startActivity(startQuiz);

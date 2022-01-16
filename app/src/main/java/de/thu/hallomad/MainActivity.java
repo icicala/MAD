@@ -20,17 +20,29 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    /**
+     * Start Page creates
+     * Toolbar: with options - Quiz's Rules and About messages
+     * Category CardView
+     * Advanced CardView
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /**
+         * Settup the toolbar of the start page
+         */
         Toolbar toolbar = findViewById(R.id.id_toolbar);
         setSupportActionBar(toolbar);
-
-
         CardView categoryCardView = findViewById(R.id.id_categoryCardView);
+
+        /**
+         * cardView listener gives an access point to another activity after the user is selecting one of two options
+         */
         categoryCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(categoryIntent);
             }
         });
-
         CardView advancedCardView = findViewById(R.id.id_advancedCardView);
         advancedCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Creating a menu with 2 selections: Quiz's Rules and About message.
+     *
+     * @param menu
+     * @return boolean value: true if the menu was created successfully
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -56,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Selection of item from menu: Quiz's Rules or About
+     * According of selection a Dialog message will be shown with OK button that close the dialog and return back to the Start Page
+     *
+     * @param item
+     * @return boolean value: true if the item was successfully selected
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

@@ -24,6 +24,15 @@ public class AdvancedActivity extends AppCompatActivity {
     private Spinner numberQuestionSpinner;
     private Spinner tagsSpinner;
 
+    /**
+     * Advanced selection activity is created with spinner that gives the user possibility to choose
+     * Category of the Quiz
+     * Difficulty of the quiz: easy, medium or hard
+     * Number of questions per quiz
+     * Tags of the quiz
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +62,11 @@ public class AdvancedActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * On Button Click the user option from spinner are read and passed to the url before beeing sed to the Quiz Api
+     *
+     * @param view
+     */
     public void onClickQuizTime(View view) {
         try {
             String categorySelection = (String) categorySpinner.getSelectedItem();
@@ -76,6 +90,11 @@ public class AdvancedActivity extends AppCompatActivity {
 
         private final ProgressDialog progressDialog;
 
+        /**
+         * A new thread is created using AsynTask to get the Quiz from Api
+         *
+         * @param context
+         */
         public GetQuestions(Context context) {
             this.progressDialog = new ProgressDialog(context, ProgressDialog.STYLE_SPINNER);
             progressDialog.setMessage("Loading...");
@@ -83,17 +102,31 @@ public class AdvancedActivity extends AppCompatActivity {
 
         }
 
+        /**
+         * Before accessing the Api a loading dialog is shown to the user
+         */
         @Override
         protected void onPreExecute() {
             progressDialog.show();
         }
 
+        /**
+         * A thread is created and a task of retrieving data from Api is given
+         *
+         * @param urlParams - string that holds url Api with options of users
+         * @return Quiz with questions ready to be display in the Quiz Play activity
+         */
         @Override
         protected ArrayList<QuestionAnswers> doInBackground(String... urlParams) {
-            Log.d("LoadData", urlParams[0]);
             return ParseJson.dataParse(urlParams[0]);
         }
 
+        /**
+         * After the data was get in the new thread in the Ui thread is shown a toast if no question match the user selection
+         * Or Play Quiz Activity is opened to start the play quiz
+         *
+         * @param data that represent the questions of quiz is send to play quiz activity
+         */
         @Override
         protected void onPostExecute(ArrayList<QuestionAnswers> data) {
 

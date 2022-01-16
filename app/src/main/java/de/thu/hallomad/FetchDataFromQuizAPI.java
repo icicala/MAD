@@ -15,7 +15,13 @@ import java.net.URLConnection;
 
 public class FetchDataFromQuizAPI {
 
-
+    /**
+     * Access the Quiz Api with given url
+     * Store the result of the Api in InputStream object
+     *
+     * @param queryApi - url of type string
+     * @return raw data from Quiz Api
+     */
     public String fetchDataFromQuizApi(String queryApi) {
         String response = null;
         try {
@@ -26,11 +32,17 @@ public class FetchDataFromQuizAPI {
             InputStream inputStream = new BufferedInputStream(connection.getInputStream());
             response = convertStreamToString(inputStream);
         } catch (Exception e) {
-            Log.e("Json", "Exception Error: " + e.getMessage());
+            Log.e("Json", e.getMessage());
         }
         return response;
     }
 
+    /**
+     * Transform InputStream Object into String of all data from Quiz Api
+     *
+     * @param inputStream
+     * @return
+     */
     private String convertStreamToString(InputStream inputStream) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         StringBuilder stringBuilder = new StringBuilder();
@@ -46,7 +58,6 @@ public class FetchDataFromQuizAPI {
             try {
                 inputStream.close();
             } catch (IOException e) {
-                e.printStackTrace();
                 Log.d("Failed to close", e.getMessage());
             }
         }
