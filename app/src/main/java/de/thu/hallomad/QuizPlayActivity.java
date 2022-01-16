@@ -45,14 +45,16 @@ public class QuizPlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_play);
+
         positionQuiz = 0;
         totalPoints = 0;
+
         listViewAnswers = findViewById(R.id.id_listView_answer);
         questionView = findViewById(R.id.id_question);
         selectedCategory = (String) getIntent().getSerializableExtra("selectedCategory");
         data = (ArrayList<QuestionAnswers>) getIntent().getSerializableExtra("QuizApiData");
         marginPoints = 100 / (data.size());
-        Log.d("Points", marginPoints + "");
+
         TextView textViewCategoryQuiz = findViewById(R.id.id_categoryQuiz);
         textViewCategoryQuiz.setText(selectedCategory + " Quiz");
 
@@ -85,7 +87,6 @@ public class QuizPlayActivity extends AppCompatActivity {
                         if (totalPoints >= marginPoints) {
                             totalPoints = totalPoints - marginPoints;
                         }
-                        Log.d("ErrorMinus", String.valueOf(totalPoints));
 
 
                     } else {
@@ -93,8 +94,6 @@ public class QuizPlayActivity extends AppCompatActivity {
                         if (positionQuiz < data.size() - 1) {
 
                             positionQuiz++;
-                            Log.d("Reseting", view.isEnabled() + "");
-//
                             displayQuiz(positionQuiz);
                         } else {
                             if (onfalseAnswer != null) {
